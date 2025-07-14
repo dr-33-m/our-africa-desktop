@@ -1,0 +1,172 @@
+[
+  {
+    "title": "Introduction to African History",
+    "description": "Explore the rich and diverse history of Africa, from ancient civilizations to modern times. Learn about the great kingdoms, cultural achievements, and the impact of colonialism.",
+    "difficulty": "beginner",
+    "duration": 120,
+    "lessons": [
+      {
+        "id": "lesson-1",
+        "title": "Ancient African Civilizations",
+        "content": "# Ancient African Civilizations\n\nAfrica is the birthplace of humanity and home to some of the world's oldest and most sophisticated civilizations.\n\n## The Kingdom of Kush\n\nThe Kingdom of Kush, located in present-day Sudan, was a powerful civilization that existed for over 1,000 years. The Kushites were skilled in ironworking, architecture, and trade.\n\n### Key Features:\n- Advanced metallurgy and iron production\n- Impressive pyramids at Meroë\n- Trade networks extending to Rome and India\n- Unique blend of Egyptian and African cultures\n\n## Ancient Egypt\n\nWhile often studied separately, ancient Egypt was fundamentally an African civilization with deep connections to the rest of the continent.\n\n### Contributions:\n- Hieroglyphic writing system\n- Monumental architecture (pyramids, temples)\n- Advanced mathematics and medicine\n- Agricultural innovations along the Nile\n\n## The Axum Empire\n\nLocated in present-day Ethiopia, the Axum Empire was a major trading power from the 1st to 8th centuries CE.\n\n### Achievements:\n- Development of the Ge'ez script\n- Massive stone obelisks\n- Early adoption of Christianity\n- Control of Red Sea trade routes",
+        "type": "text",
+        "duration": 30,
+        "order": 1
+      },
+      {
+        "id": "lesson-2",
+        "title": "Great West African Kingdoms",
+        "content": "# Great West African Kingdoms\n\nWest Africa was home to powerful empires that controlled vast trade networks and accumulated immense wealth.\n\n## The Ghana Empire (300-1200 CE)\n\nThe Ghana Empire was the first of the great West African trading empires.\n\n### Economy:\n- Control of gold and salt trade\n- Taxation of caravans crossing their territory\n- Agriculture and cattle herding\n- Iron production and trade\n\n### Society:\n- Complex political structure with local rulers\n- Religious tolerance\n- Skilled craftsmen and traders\n- Strong military organization\n\n## The Mali Empire (1235-1600 CE)\n\nMali became the largest empire in West Africa under Mansa Musa's rule.\n\n### Mansa Musa's Pilgrimage:\n- Journey to Mecca in 1324-1325\n- Distributed so much gold in Cairo that it depressed the price for decades\n- Put Mali on medieval world maps\n- Demonstrated the empire's immense wealth\n\n### Achievements:\n- Established Timbuktu as a center of learning\n- Created a complex legal system\n- Built an extensive road network\n- Promoted Islamic scholarship\n\n## The Songhai Empire (1464-1591 CE)\n\nSonghai became the largest empire in African history.\n\n### Administration:\n- Professional army and navy\n- Provincial governors\n- Standardized weights and measures\n- Efficient tax collection system",
+        "type": "text",
+        "duration": 35,
+        "order": 2
+      },
+      {
+        "id": "lesson-3",
+        "title": "East African City-States",
+        "content": "# East African City-States\n\nThe East African coast was home to prosperous city-states that connected Africa to the Indian Ocean trade network.\n\n## The Swahili Coast\n\nThe Swahili city-states emerged from the interaction between African, Arab, and Persian cultures.\n\n### Major Cities:\n- **Kilwa**: Center of gold trade from Zimbabwe\n- **Mombasa**: Important port and trading center\n- **Zanzibar**: Hub for spice and slave trade\n- **Mogadishu**: Northern trading post\n\n### Cultural Fusion:\n- Development of Swahili language (Bantu + Arabic)\n- Islamic architecture with African elements\n- Unique art and literary traditions\n- Maritime trading culture\n\n## Great Zimbabwe (1220-1450 CE)\n\nThe Kingdom of Zimbabwe controlled the gold trade in southeastern Africa.\n\n### The Great Enclosure:\n- Massive stone walls without mortar\n- Complex of buildings and courtyards\n- Evidence of sophisticated urban planning\n- Symbol of African architectural achievement\n\n### Economy:\n- Gold mining and trade\n- Cattle herding\n- Agriculture in fertile valleys\n- Trade with Indian Ocean ports\n\n## Ethiopian Highlands\n\nEthiopia maintained its independence and developed unique Christian traditions.\n\n### Rock Churches of Lalibela:\n- Carved directly from volcanic rock\n- Architectural marvels of medieval Africa\n- Still active pilgrimage sites\n- UNESCO World Heritage Sites",
+        "type": "text",
+        "duration": 30,
+        "order": 3
+      },
+      {
+        "id": "lesson-4",
+        "title": "The Impact of Colonialism",
+        "content": "# The Impact of Colonialism\n\nThe colonial period (1880s-1960s) fundamentally transformed African societies and continues to influence the continent today.\n\n## The Scramble for Africa (1884-1914)\n\nEuropean powers rapidly divided Africa among themselves.\n\n### Berlin Conference (1884-1885):\n- European powers met to divide Africa\n- No African representatives present\n- Arbitrary borders drawn without regard to ethnic groups\n- Led to conflicts that persist today\n\n### Methods of Control:\n- Military conquest and superior weapons\n- Divide and rule tactics\n- Exploitation of existing conflicts\n- Economic penetration before political control\n\n## Colonial Administration\n\nDifferent European powers used various systems to control their colonies.\n\n### Direct Rule (French):\n- Centralized administration from Paris\n- French officials in all important positions\n- Assimilation policy - creating French citizens\n- Suppression of local customs and languages\n\n### Indirect Rule (British):\n- Used existing traditional rulers\n- Maintained some local customs\n- Less expensive than direct rule\n- Created tensions between traditional and modern authority\n\n## Economic Exploitation\n\nColonial economies were designed to benefit European powers.\n\n### Cash Crop Production:\n- Forced cultivation of export crops\n- Neglect of food crop production\n- Environmental degradation\n- Economic dependency on single crops\n\n### Resource Extraction:\n- Mining of gold, diamonds, copper\n- Forced labor in mines and plantations\n- Little benefit to local populations\n- Infrastructure built only to export resources\n\n## Resistance and Independence\n\nAfricans resisted colonial rule from the beginning.\n\n### Early Resistance:\n- Military resistance (Ashanti, Zulu wars)\n- Religious movements\n- Cultural preservation efforts\n- Formation of early political organizations\n\n### Independence Movements:\n- Pan-Africanism and nationalism\n- Role of World War II\n- Educated elite leadership\n- Mass political parties and protests",
+        "type": "text",
+        "duration": 25,
+        "order": 4
+      }
+    ],
+    "quiz": {
+      "id": "quiz-1",
+      "title": "African History Knowledge Check",
+      "questions": [
+        {
+          "id": "q1",
+          "question": "Which ancient African kingdom was known for its iron production and pyramids at Meroë?",
+          "type": "multiple-choice",
+          "options": ["Kingdom of Kush", "Ancient Egypt", "Axum Empire", "Ghana Empire"],
+          "correctAnswer": 0,
+          "explanation": "The Kingdom of Kush, located in present-day Sudan, was renowned for its advanced metallurgy and the pyramids built at Meroë."
+        },
+        {
+          "id": "q2",
+          "question": "Mansa Musa's famous pilgrimage to Mecca demonstrated the wealth of which empire?",
+          "type": "multiple-choice",
+          "options": ["Ghana Empire", "Mali Empire", "Songhai Empire", "Axum Empire"],
+          "correctAnswer": 1,
+          "explanation": "Mansa Musa ruled the Mali Empire and his 1324-1325 pilgrimage to Mecca, during which he distributed vast amounts of gold, demonstrated Mali's immense wealth."
+        },
+        {
+          "id": "q3",
+          "question": "The Swahili language developed from the interaction between which cultures?",
+          "type": "multiple-choice",
+          "options": [
+            "African and European",
+            "Bantu and Arabic",
+            "Egyptian and Nubian",
+            "Ethiopian and Persian"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Swahili developed from the interaction between Bantu-speaking African peoples and Arabic-speaking traders along the East African coast."
+        },
+        {
+          "id": "q4",
+          "question": "The Berlin Conference of 1884-1885 resulted in the arbitrary division of Africa among European powers.",
+          "type": "true-false",
+          "options": ["True", "False"],
+          "correctAnswer": 0,
+          "explanation": "The Berlin Conference led to the 'Scramble for Africa' where European powers divided the continent without African representation, creating arbitrary borders."
+        },
+        {
+          "id": "q5",
+          "question": "What was the main difference between French direct rule and British indirect rule in colonial Africa?",
+          "type": "multiple-choice",
+          "options": [
+            "Direct rule used local chiefs, indirect rule used European officials",
+            "Direct rule was more expensive, indirect rule was cheaper",
+            "Direct rule centralized power in Europe, indirect rule used existing traditional authorities",
+            "There was no significant difference between the two systems"
+          ],
+          "correctAnswer": 2,
+          "explanation": "French direct rule centralized administration in Paris with French officials, while British indirect rule worked through existing traditional rulers and local customs."
+        }
+      ],
+      "passingScore": 70
+    }
+  },
+  {
+    "title": "African Literature and Oral Traditions",
+    "description": "Discover the rich literary heritage of Africa, from ancient oral traditions to contemporary written works. Explore the power of storytelling in preserving culture and history.",
+    "difficulty": "intermediate",
+    "duration": 90,
+    "lessons": [
+      {
+        "id": "lesson-1",
+        "title": "Oral Traditions and Griots",
+        "content": "# Oral Traditions and Griots\n\nBefore the widespread adoption of writing, African societies preserved their history, culture, and wisdom through oral traditions.\n\n## The Role of Griots\n\nGriots are traditional storytellers, musicians, and historians found primarily in West Africa.\n\n### Functions of Griots:\n- Preserving historical knowledge\n- Entertaining at social gatherings\n- Serving as advisors to rulers\n- Mediating disputes\n- Maintaining genealogies of important families\n\n### Training and Skills:\n- Born into griot families\n- Years of apprenticeship\n- Master multiple instruments (kora, balafon, djembe)\n- Memorize thousands of stories and songs\n- Skilled in improvisation and performance\n\n## Types of Oral Literature\n\n### Praise Songs:\n- Honor important individuals\n- Recount heroic deeds\n- Maintain social hierarchies\n- Motivate warriors and leaders\n\n### Folktales:\n- Teach moral lessons\n- Explain natural phenomena\n- Entertain children and adults\n- Preserve cultural values\n\n### Epic Narratives:\n- Tell stories of legendary heroes\n- Combine history with mythology\n- Performed over multiple sessions\n- Examples: Sundiata Epic, Epic of Askia Mohammed\n\n## The Sundiata Epic\n\nThe founding story of the Mali Empire, told through generations of griots.\n\n### Key Themes:\n- Destiny and prophecy\n- Overcoming adversity\n- The importance of unity\n- Divine intervention in human affairs\n\n### Cultural Significance:\n- Charter myth of Mali Empire\n- Legitimizes royal authority\n- Teaches values of courage and perseverance\n- Connects past with present",
+        "type": "text",
+        "duration": 25,
+        "order": 1
+      },
+      {
+        "id": "lesson-2",
+        "title": "Modern African Literature",
+        "content": "# Modern African Literature\n\nAfrican literature in colonial and post-colonial periods addresses themes of identity, resistance, and cultural preservation.\n\n## Pioneer Writers\n\n### Chinua Achebe (Nigeria):\n- \"Things Fall Apart\" (1958)\n- Depicted pre-colonial Igbo society\n- Challenged Western stereotypes of Africa\n- Showed complexity of traditional African cultures\n\n### Wole Soyinka (Nigeria):\n- First African Nobel Prize winner in Literature (1986)\n- Playwright, poet, and essayist\n- Themes of political oppression and cultural identity\n- Works: \"Death and the King's Horseman,\" \"The Lion and the Jewel\"\n\n### Ngũgĩ wa Thiong'o (Kenya):\n- Advocate for writing in African languages\n- \"Decolonising the Mind\" essay\n- Novels: \"Weep Not, Child,\" \"A Grain of Wheat\"\n- Themes of colonial resistance and language politics\n\n## Themes in African Literature\n\n### Cultural Conflict:\n- Traditional vs. modern values\n- Impact of Western education\n- Generational differences\n- Religious conversion\n\n### Political Resistance:\n- Anti-colonial struggles\n- Criticism of corrupt governments\n- Fighting for social justice\n- Pan-African consciousness\n\n### Identity and Belonging:\n- Search for African identity\n- Diaspora experiences\n- Gender roles and women's rights\n- Urban vs. rural life\n\n## Women Writers\n\n### Mariama Bâ (Senegal):\n- \"So Long a Letter\" (1979)\n- Women's experiences in polygamous society\n- Education and women's empowerment\n- Islamic feminism\n\n### Buchi Emecheta (Nigeria):\n- \"The Joys of Motherhood\"\n- Women's struggles in changing society\n- Migration and cultural adaptation\n- Critique of traditional gender roles\n\n### Chimamanda Ngozi Adichie (Nigeria):\n- Contemporary voice in African literature\n- \"Purple Hibiscus,\" \"Half of a Yellow Sun\"\n- Feminist perspectives\n- Global African experiences",
+        "type": "text",
+        "duration": 30,
+        "order": 2
+      },
+      {
+        "id": "lesson-3",
+        "title": "Poetry and Performance",
+        "content": "# Poetry and Performance\n\nAfrican poetry combines traditional oral forms with modern written expression, often emphasizing performance and social commentary.\n\n## Traditional Poetry Forms\n\n### Praise Poetry:\n- Honor ancestors and leaders\n- Celebrate achievements\n- Maintain cultural memory\n- Performed at ceremonies\n\n### Work Songs:\n- Coordinate group labor\n- Make work more enjoyable\n- Pass time during repetitive tasks\n- Build community solidarity\n\n### Ceremonial Poetry:\n- Mark important life events\n- Religious and spiritual purposes\n- Seasonal celebrations\n- Coming-of-age rituals\n\n## Modern African Poetry\n\n### Negritude Movement:\n- Celebration of African identity\n- Rejection of colonial values\n- Léopold Sédar Senghor (Senegal)\n- Aimé Césaire (Martinique)\n\n### Themes in Modern Poetry:\n- Cultural pride and heritage\n- Political resistance and freedom\n- Pan-African unity\n- Social justice and human rights\n\n## Performance Poetry\n\n### Characteristics:\n- Meant to be heard, not just read\n- Uses rhythm, repetition, and sound\n- Interactive audience participation\n- Combines music and movement\n\n### Contemporary Forms:\n- Spoken word performances\n- Hip-hop and rap music\n- Poetry slams and competitions\n- Digital and multimedia poetry\n\n## Notable Poets\n\n### Christopher Okigbo (Nigeria):\n- Modernist poet\n- Complex imagery and symbolism\n- Themes of cultural crisis\n- Died in Nigerian Civil War\n\n### Dennis Brutus (South Africa):\n- Anti-apartheid activist\n- Poetry of resistance and exile\n- Sports and politics\n- International human rights advocate\n\n### Kofi Awoonor (Ghana):\n- Traditional and modern synthesis\n- Ewe cultural traditions\n- Political engagement\n- Academic and diplomatic career",
+        "type": "text",
+        "duration": 20,
+        "order": 3
+      }
+    ],
+    "quiz": {
+      "id": "quiz-2",
+      "title": "African Literature Quiz",
+      "questions": [
+        {
+          "id": "q1",
+          "question": "What is the primary role of griots in West African society?",
+          "type": "multiple-choice",
+          "options": [
+            "Religious leaders and priests",
+            "Storytellers, musicians, and historians",
+            "Military commanders and warriors",
+            "Farmers and craftsmen"
+          ],
+          "correctAnswer": 1,
+          "explanation": "Griots serve as traditional storytellers, musicians, and historians who preserve cultural knowledge through oral traditions."
+        },
+        {
+          "id": "q2",
+          "question": "Which novel by Chinua Achebe is considered a landmark work in African literature?",
+          "type": "multiple-choice",
+          "options": [
+            "Purple Hibiscus",
+            "Things Fall Apart",
+            "So Long a Letter",
+            "Weep Not, Child"
+          ],
+          "correctAnswer": 1,
+          "explanation": "'Things Fall Apart' (1958) by Chinua Achebe is considered one of the most important works in African literature, depicting pre-colonial Igbo society."
+        },
+        {
+          "id": "q3",
+          "question": "The Negritude movement celebrated African identity and rejected colonial values.",
+          "type": "true-false",
+          "options": ["True", "False"],
+          "correctAnswer": 0,
+          "explanation": "The Negritude movement, led by poets like Léopold Sédar Senghor, celebrated African identity and culture while rejecting colonial impositions."
+        }
+      ],
+      "passingScore": 70
+    }
+  }
+]
