@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useEffect, useState, useRef } from 'react'
 
 const EnvironmentIndicator: React.FC = () => {

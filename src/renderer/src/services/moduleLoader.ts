@@ -10,13 +10,13 @@ export interface ModuleLoadResult {
 
 export class ModuleLoaderService {
   private static readonly MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
-  private static readonly ALLOWED_DOMAINS = [
-    'github.com',
-    'raw.githubusercontent.com',
-    'gist.githubusercontent.com',
-    'cdn.jsdelivr.net',
-    'unpkg.com'
-  ]
+  // private static readonly ALLOWED_DOMAINS = [
+  //   'github.com',
+  //   'raw.githubusercontent.com',
+  //   'gist.githubusercontent.com',
+  //   'cdn.jsdelivr.net',
+  //   'unpkg.com'
+  // ]
 
   /**
    * Load a module from a URL
@@ -296,6 +296,7 @@ export class ModuleLoaderService {
   /**
    * Generate a preview of the module for user confirmation
    */
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   static generateModulePreview(module: Module) {
     return {
       title: module.title,

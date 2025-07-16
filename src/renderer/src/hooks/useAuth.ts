@@ -30,7 +30,7 @@ export const useAuth = create<AuthState>()(
           const result = await apiClient.login({ email, password })
 
           if (!result.success) {
-            throw new Error(result.error?.error || 'Login failed')
+            throw new Error(result.error || 'Login failed')
           }
 
           const authUser: AuthUser = {
@@ -59,7 +59,7 @@ export const useAuth = create<AuthState>()(
           const result = await apiClient.register({ username, email, password })
 
           if (!result.success) {
-            throw new Error(result.error?.error || 'Registration failed')
+            throw new Error(result.error || 'Registration failed')
           }
 
           const authUser: AuthUser = {

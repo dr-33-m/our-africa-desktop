@@ -1,4 +1,3 @@
-import React from 'react'
 import { RootRoute, Route, Router, RouterProvider, redirect } from '@tanstack/react-router'
 
 import Layout from './components/layout/Layout'
@@ -119,6 +118,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function App() {
   useDataRefresher()
   return <RouterProvider router={router} />

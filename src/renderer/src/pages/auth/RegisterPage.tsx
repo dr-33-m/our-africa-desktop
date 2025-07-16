@@ -1,68 +1,61 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { Mail, Lock, User, UserPlus } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
-import Button from "../../components/ui/Button";
-import Input from "../../components/ui/Input";
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from '@tanstack/react-router'
+import { Mail, Lock, User, UserPlus } from 'lucide-react'
+import { useAuth } from '../../hooks/useAuth'
+import Button from '../../components/ui/Button'
+import Input from '../../components/ui/Input'
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "../../components/ui/Card";
+  CardTitle
+} from '../../components/ui/Card'
 
 const registerSchema = z
   .object({
-    username: z.string().min(3, "Username must be at least 3 characters"),
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z
-      .string()
-      .min(6, "Password must be at least 6 characters"),
+    username: z.string().min(3, 'Username must be at least 3 characters'),
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string().min(6, 'Password must be at least 6 characters')
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+    message: 'Passwords do not match',
+    path: ['confirmPassword']
+  })
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
+type RegisterFormValues = z.infer<typeof registerSchema>
 
 const RegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { register: registerUser, isLoading, error } = useAuth();
+  const navigate = useNavigate()
+  const { register: registerUser, isLoading, error } = useAuth()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
-  });
+    resolver: zodResolver(registerSchema)
+  })
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const onSubmit = async (data: RegisterFormValues) => {
-    const success = await registerUser(
-      data.username,
-      data.email,
-      data.password
-    );
+    const success = await registerUser(data.username, data.email, data.password)
     if (success) {
-      navigate({ to: "/" });
+      navigate({ to: '/' })
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-background dark:bg-background-dark flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card className="w-full animate-fadeIn">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
-              Create an Account
-            </CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">Create an Account</CardTitle>
             <CardDescription className="text-center">
               Enter your details to create your account
             </CardDescription>
@@ -84,7 +77,7 @@ const RegisterPage: React.FC = () => {
                   leftIcon={<User size={18} className="text-text-secondary" />}
                   error={!!errors.username}
                   helperText={errors.username?.message}
-                  {...register("username")}
+                  {...register('username')}
                 />
               </div>
               <div className="space-y-2">
@@ -98,7 +91,7 @@ const RegisterPage: React.FC = () => {
                   leftIcon={<Mail size={18} className="text-text-secondary" />}
                   error={!!errors.email}
                   helperText={errors.email?.message}
-                  {...register("email")}
+                  {...register('email')}
                 />
               </div>
               <div className="space-y-2">
@@ -112,14 +105,11 @@ const RegisterPage: React.FC = () => {
                   leftIcon={<Lock size={18} className="text-text-secondary" />}
                   error={!!errors.password}
                   helperText={errors.password?.message}
-                  {...register("password")}
+                  {...register('password')}
                 />
               </div>
               <div className="space-y-2">
-                <label
-                  htmlFor="confirmPassword"
-                  className="text-sm font-medium"
-                >
+                <label htmlFor="confirmPassword" className="text-sm font-medium">
                   Confirm Password
                 </label>
                 <Input
@@ -129,7 +119,7 @@ const RegisterPage: React.FC = () => {
                   leftIcon={<Lock size={18} className="text-text-secondary" />}
                   error={!!errors.confirmPassword}
                   helperText={errors.confirmPassword?.message}
-                  {...register("confirmPassword")}
+                  {...register('confirmPassword')}
                 />
               </div>
               <Button
@@ -144,9 +134,9 @@ const RegisterPage: React.FC = () => {
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-sm text-center text-text-secondary">
-              Already have an account?{" "}
+              Already have an account?{' '}
               <a
-                onClick={() => navigate({ to: "/auth/login" })}
+                onClick={() => navigate({ to: '/auth/login' })}
                 className="text-primary hover:underline cursor-pointer dark:text-primary-dark"
               >
                 Sign in
@@ -156,7 +146,7 @@ const RegisterPage: React.FC = () => {
         </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

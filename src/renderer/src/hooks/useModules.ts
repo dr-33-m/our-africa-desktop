@@ -31,7 +31,7 @@ export const useModules = create<ModulesState>()(
           const result = await apiClient.getModules()
 
           if (!result.success) {
-            throw new Error(result.error?.error || 'Failed to fetch modules')
+            throw new Error(result.error || 'Failed to fetch modules')
           }
 
           set({ modules: result.data || [], isLoading: false })
@@ -50,10 +50,10 @@ export const useModules = create<ModulesState>()(
           const result = await apiClient.getModule(id)
 
           if (!result.success) {
-            if (result.error?.error === 'Module not found') {
+            if (result.error === 'Module not found') {
               throw new Error('Module not found')
             }
-            throw new Error(result.error?.error || 'Failed to fetch module')
+            throw new Error(result.error || 'Failed to fetch module')
           }
 
           set({ currentModule: result.data || null, isLoading: false })
@@ -78,7 +78,7 @@ export const useModules = create<ModulesState>()(
           const result = await apiClient.createModule(module)
 
           if (!result.success) {
-            throw new Error(result.error?.error || 'Failed to save module')
+            throw new Error(result.error || 'Failed to save module')
           }
 
           const savedModule = result.data!

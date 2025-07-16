@@ -1,14 +1,14 @@
-import React from "react";
-import { X } from "lucide-react";
-import Button from "./Button";
+import React from 'react'
+import { X } from 'lucide-react'
+import Button from './Button'
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
-  showCloseButton?: boolean;
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  children: React.ReactNode
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  showCloseButton?: boolean
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -16,23 +16,24 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  size = "md",
-  showCloseButton = true,
+  size = 'md',
+  showCloseButton = true
 }) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   const sizeClasses = {
-    sm: "max-w-md",
-    md: "max-w-lg",
-    lg: "max-w-2xl",
-    xl: "max-w-4xl",
-  };
+    sm: 'max-w-md',
+    md: 'max-w-lg',
+    lg: 'max-w-2xl',
+    xl: 'max-w-4xl'
+  }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   return (
     <div
@@ -44,9 +45,7 @@ const Modal: React.FC<ModalProps> = ({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border dark:border-border-dark">
-          <h2 className="text-xl font-semibold text-text dark:text-text-dark">
-            {title}
-          </h2>
+          <h2 className="text-xl font-semibold text-text dark:text-text-dark">{title}</h2>
           {showCloseButton && (
             <Button
               variant="ghost"
@@ -60,12 +59,10 @@ const Modal: React.FC<ModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
-          {children}
-        </div>
+        <div className="overflow-y-auto max-h-[calc(90vh-120px)]">{children}</div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

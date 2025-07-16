@@ -73,6 +73,7 @@ export const useTimeTracker = (
         }
       }
     }
+    return () => {} // Empty cleanup for cases where we don't set up interval
   }, [onSave, autoSaveInterval, sessionTime])
 
   // Handle window focus/blur for activity detection

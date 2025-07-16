@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { useState } from 'react'
 import { Upload, AlertCircle, CheckCircle, Clock, BookOpen, Lock } from 'lucide-react'
 import Modal from '../ui/Modal'

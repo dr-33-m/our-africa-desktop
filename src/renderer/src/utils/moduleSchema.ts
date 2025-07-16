@@ -1,4 +1,4 @@
-import { Module, ModuleContent, Lesson, Quiz, LessonContent } from '../types'
+import { Module, ModuleContent, Lesson, Quiz, ContentBlock } from '../types'
 
 export interface ModuleValidationResult {
   isValid: boolean
@@ -7,7 +7,7 @@ export interface ModuleValidationResult {
 }
 
 // Type for raw module data that might come from external sources
-interface RawModuleData {
+export interface RawModuleData {
   title?: unknown
   description?: unknown
   content?: unknown
@@ -15,14 +15,14 @@ interface RawModuleData {
   [key: string]: unknown
 }
 
-interface RawModuleContent {
+export interface RawModuleContent {
   lessons?: unknown
   quizzes?: unknown
   estimatedTime?: unknown
   [key: string]: unknown
 }
 
-interface RawLesson {
+export interface RawLesson {
   id?: unknown
   title?: unknown
   order?: unknown
@@ -30,7 +30,7 @@ interface RawLesson {
   [key: string]: unknown
 }
 
-interface RawLessonContent {
+export interface RawLessonContent {
   type?: unknown
   content?: unknown
   src?: unknown
@@ -40,7 +40,7 @@ interface RawLessonContent {
   [key: string]: unknown
 }
 
-interface RawQuiz {
+export interface RawQuiz {
   id?: unknown
   title?: unknown
   description?: unknown
@@ -50,7 +50,7 @@ interface RawQuiz {
   [key: string]: unknown
 }
 
-interface RawQuestion {
+export interface RawQuestion {
   id?: unknown
   question?: unknown
   options?: unknown
@@ -308,7 +308,8 @@ export class ModuleValidator {
       description: this.sanitizeString(data.description as string),
       content: this.sanitizeContent(data.content as RawModuleContent),
       version: (data.version as string) || '1.0.0',
-      downloadedAt: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
 
     return sanitizedModule
@@ -346,7 +347,7 @@ export class ModuleValidator {
     }
   }
 
-  private static sanitizeLessonContent(item: RawLessonContent): LessonContent {
+  private static sanitizeLessonContent(item: RawLessonContent): ContentBlock {
     const type = item.type as string
 
     switch (type) {
@@ -402,8 +403,12 @@ export class ModuleValidator {
         return {
           id: question.id as string,
           question: this.sanitizeString(question.question),
+          type: 'multiple-choice', // Default to multiple-choice since we have options
           options: options.map((opt: unknown) => this.sanitizeString(opt)),
-          correctAnswer: question.correctAnswer as number
+          correctAnswer:
+            typeof question.correctAnswer === 'number'
+              ? question.correctAnswer
+              : parseInt(question.correctAnswer as string) || 0
         }
       })
     }

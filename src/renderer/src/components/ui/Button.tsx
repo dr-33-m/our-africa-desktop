@@ -1,29 +1,23 @@
-import React from "react";
-import { cn } from "../../lib/utils";
+import React from 'react'
+import { cn } from '../../lib/utils'
 
-type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "outline"
-  | "ghost"
-  | "link"
-  | "danger";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'danger'
+type ButtonSize = 'sm' | 'md' | 'lg'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  variant?: ButtonVariant
+  size?: ButtonSize
+  isLoading?: boolean
+  leftIcon?: React.ReactNode
+  rightIcon?: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = "primary",
-      size = "md",
+      variant = 'primary',
+      size = 'md',
       isLoading = false,
       leftIcon,
       rightIcon,
@@ -34,26 +28,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+      'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
 
     const variants = {
       primary:
-        "bg-primary text-white hover:bg-primary/90 dark:bg-primary-dark dark:hover:bg-primary-dark/90",
+        'bg-primary text-white hover:bg-primary/90 dark:bg-primary-dark dark:hover:bg-primary-dark/90',
       secondary:
-        "bg-secondary text-white hover:bg-secondary/90 dark:bg-secondary-dark dark:hover:bg-secondary-dark/90",
+        'bg-secondary text-white hover:bg-secondary/90 dark:bg-secondary-dark dark:hover:bg-secondary-dark/90',
       outline:
-        "border border-border bg-transparent hover:bg-accent hover:text-black dark:hover:text-white",
-      ghost: "hover:bg-accent hover:text-black dark:hover:text-white",
-      link: "text-primary underline-offset-4 hover:underline dark:text-primary-dark",
-      danger:
-        "bg-error text-white hover:bg-error/90 dark:bg-error-dark dark:hover:bg-error-dark/90",
-    };
+        'border border-border bg-transparent hover:bg-accent hover:text-black dark:hover:text-white',
+      ghost: 'hover:bg-accent hover:text-black dark:hover:text-white',
+      link: 'text-primary underline-offset-4 hover:underline dark:text-primary-dark',
+      danger: 'bg-error text-white hover:bg-error/90 dark:bg-error-dark dark:hover:bg-error-dark/90'
+    }
 
     const sizes = {
-      sm: "h-9 px-3 text-sm",
-      md: "h-10 px-4 py-2",
-      lg: "h-11 px-8 text-lg",
-    };
+      sm: 'h-9 px-3 text-sm',
+      md: 'h-10 px-4 py-2',
+      lg: 'h-11 px-8 text-lg'
+    }
 
     return (
       <button
@@ -61,7 +54,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           baseStyles,
           variants[variant],
           sizes[size],
-          isLoading && "opacity-70 cursor-not-allowed",
+          isLoading && 'opacity-70 cursor-not-allowed',
           className
         )}
         disabled={disabled || isLoading}
@@ -94,10 +87,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
         {!isLoading && rightIcon && <span className="ml-2">{rightIcon}</span>}
       </button>
-    );
+    )
   }
-);
+)
 
-Button.displayName = "Button";
+Button.displayName = 'Button'
 
-export default Button;
+export default Button

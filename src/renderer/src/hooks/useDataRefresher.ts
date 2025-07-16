@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { useAuth } from "./useAuth";
-import { useModules } from "./useModules";
-import { useProgress } from "./useProgress";
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { useEffect } from 'react'
+import { useAuth } from './useAuth'
+import { useModules } from './useModules'
+import { useProgress } from './useProgress'
 
 export const useDataRefresher = () => {
-  const { user } = useAuth();
-  const { loadModules } = useModules();
-  const { loadProgress } = useProgress();
+  const { user } = useAuth()
+  const { loadModules } = useModules()
+  const { loadProgress } = useProgress()
 
   useEffect(() => {
     if (user) {
-      const authHeaders = useAuth.getState().getAuthHeaders();
-      loadModules(authHeaders);
-      loadProgress(user.id, authHeaders);
+      loadModules()
+      loadProgress(user.id)
     }
-  }, [user, loadModules, loadProgress]);
-};
+  }, [user, loadModules, loadProgress])
+}

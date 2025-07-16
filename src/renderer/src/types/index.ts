@@ -7,6 +7,10 @@ export interface User {
   created_at: string
 }
 
+export interface AuthUser extends User {
+  token: string
+}
+
 export interface UserSession {
   user: User
   token: string
