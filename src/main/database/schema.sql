@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS user_progress (
   module_id INTEGER NOT NULL,
   progress_percentage INTEGER DEFAULT 0,
   completed BOOLEAN DEFAULT FALSE,
+  started_at DATETIME NULL,
   completion_date DATETIME NULL,
   total_time_spent INTEGER DEFAULT 0, -- in seconds
   last_accessed DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -6,8 +6,9 @@ import { useModules } from '../../hooks/useModules'
 import { useProgress } from '../../hooks/useProgress'
 import Button from '../../components/ui/Button'
 import Progress from '../../components/ui/Progress'
-import { ContentBlock } from '../../types'
+import { ContentBlock, UserProgress } from '../../types'
 import ModuleCompletionModal from '../../components/modules/ModuleCompletionModal'
+import { apiClient } from '../../lib/apiClient'
 
 const LessonPage: React.FC = () => {
   const { moduleId, lessonId } = useParams({
@@ -18,48 +19,25 @@ const LessonPage: React.FC = () => {
   const { currentModule, loadModuleById, isLoading: moduleLoading } = useModules()
   const { updateLessonProgress, isModuleCompleted } = useProgress()
 
-  const [startTime] = useState<Date>(new Date())
   const [showCompletionModal, setShowCompletionModal] = useState<boolean>(false)
   const [saving, setSaving] = useState<boolean>(false)
+  const [moduleProgressData, setModuleProgressData] = useState<UserProgress | null>(null)
 
   useEffect(() => {
     if (moduleId) {
       loadModuleById(parseInt(moduleId))
     }
-
-    // Cleanup function to save progress when leaving the page
-    return () => {
-      saveProgress()
-    }
-  }, [moduleId, lessonId]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Always mark lesson as completed when saving progress (for navigation or unmount)
-  const saveProgress = async (): Promise<void> => {
-    if (user && currentModule) {
-      const timeSpent = Math.round((new Date().getTime() - startTime.getTime()) / 1000) // seconds
-
-      try {
-        await updateLessonProgress(user.id, currentModule.id, lessonId, {
-          completed: true,
-          timeSpent
-        })
-      } catch (error) {
-        console.error('Failed to save lesson progress:', error)
-      }
-    }
-  }
+  }, [moduleId, loadModuleById])
 
   const handleComplete = async (): Promise<void> => {
     setSaving(true)
 
     if (currentModule && user) {
-      const timeSpent = Math.round((new Date().getTime() - startTime.getTime()) / 1000) // seconds
-
       try {
-        // Save progress with completed = true and wait for backend response
+        // Mark lesson as completed
         await updateLessonProgress(user.id, currentModule.id, lessonId, {
           completed: true,
-          timeSpent
+          timeSpent: 0 // Simplified - no detailed time tracking
         })
 
         setSaving(false)
@@ -90,7 +68,18 @@ const LessonPage: React.FC = () => {
             )
 
             if (moduleIsCompleted) {
-              // All lessons and quizzes completed - show completion modal
+              // All lessons and quizzes completed - get progress data and show completion modal
+              try {
+                const progressResponse = await apiClient.getModuleProgress(
+                  user.id,
+                  parseInt(moduleId)
+                )
+                if (progressResponse.success && progressResponse.data) {
+                  setModuleProgressData(progressResponse.data.moduleProgress)
+                }
+              } catch (error) {
+                console.error('Failed to fetch progress data for completion modal:', error)
+              }
               setShowCompletionModal(true)
             } else {
               // Not all requirements met - go back to module details
@@ -245,6 +234,7 @@ const LessonPage: React.FC = () => {
           isOpen={showCompletionModal}
           onClose={() => setShowCompletionModal(false)}
           module={currentModule}
+          progress={moduleProgressData}
           onContinue={() => navigate({ to: '/modules/browse' })}
         />
       )}

@@ -63,36 +63,6 @@ const DashboardPage: React.FC = () => {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm font-medium text-text-secondary dark:text-text-secondary-dark">
-                  Total Learning Time
-                </p>
-                <h3 className="text-2xl font-bold mt-1">
-                  {formatTime(
-                    modules.reduce((total, module) => {
-                      const progress = user
-                        ? getModuleProgress(
-                            user.id,
-                            module.id,
-                            module.content.lessons.length,
-                            module.content.quizzes?.length || 0
-                          )
-                        : null
-                      return total + (progress?.totalTimeSpent || 0)
-                    }, 0)
-                  )}
-                </h3>
-              </div>
-              <div className="p-2 bg-secondary/10 rounded-full dark:bg-secondary-dark/20">
-                <Clock className="h-6 w-6 text-secondary dark:text-secondary-dark" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm font-medium text-text-secondary dark:text-text-secondary-dark">
                   Certificates Earned
                 </p>
                 <h3 className="text-2xl font-bold mt-1">

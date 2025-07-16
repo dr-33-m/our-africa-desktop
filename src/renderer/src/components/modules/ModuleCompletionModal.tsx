@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import { Award, Download, CheckCircle } from 'lucide-react'
+import { Award, Download, CheckCircle, Clock } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import { useProgress } from '../../hooks/useProgress'
 import Button from '../ui/Button'
 import Modal from '../ui/Modal'
-import { Module } from '../../types'
+import { Module, UserProgress } from '../../types'
 import { generateCertificate, saveCertificate } from '../../services/certificateService'
+import { formatDuration, formatDateShort } from '../../lib/utils'
 
 interface ModuleCompletionModalProps {
   isOpen: boolean
   onClose: () => void
   module: Module
+  progress?: UserProgress | null
   onContinue?: () => void
 }
 
@@ -18,6 +20,7 @@ const ModuleCompletionModal: React.FC<ModuleCompletionModalProps> = ({
   isOpen,
   onClose,
   module,
+  progress,
   onContinue
 }) => {
   const { user } = useAuth()
@@ -82,6 +85,20 @@ const ModuleCompletionModal: React.FC<ModuleCompletionModalProps> = ({
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {module.content.lessons.length} lessons • {module.content.quizzes?.length || 0} quizzes
           </p>
+
+          {/* Completion Timeline */}
+          {progress && (
+            <div className="mt-4 flex items-center justify-center text-sm text-gray-600 dark:text-gray-300">
+              <Clock size={16} className="mr-2" />
+              <span>
+                {progress.completion_date
+                  ? formatDuration(progress.started_at, progress.completion_date)
+                  : progress.started_at
+                    ? `Started ${formatDateShort(progress.started_at)}`
+                    : 'Just completed'}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Certificate Section */}

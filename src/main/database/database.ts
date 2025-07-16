@@ -371,20 +371,47 @@ class DatabaseManager {
     quizScore?: number
   }): Promise<ApiResponse<LessonProgress>> {
     try {
-      // Check if progress record exists
-      const existing = await this.get(
+      // Check if module progress exists (for setting started_at timestamp)
+      const moduleProgress = await this.get<UserProgress>(
+        'SELECT * FROM user_progress WHERE user_id = ? AND module_id = ?',
+        [progressData.userId, progressData.moduleId]
+      )
+
+      if (!moduleProgress) {
+        // First time user interacts with this module - create module progress with started_at
+        await this.run(
+          'INSERT INTO user_progress (user_id, module_id, started_at, last_accessed) VALUES (?, ?, ?, ?)',
+          [
+            progressData.userId,
+            progressData.moduleId,
+            new Date().toISOString(),
+            new Date().toISOString()
+          ]
+        )
+      } else {
+        // Update last_accessed time
+        await this.run(
+          'UPDATE user_progress SET last_accessed = ? WHERE user_id = ? AND module_id = ?',
+          [new Date().toISOString(), progressData.userId, progressData.moduleId]
+        )
+      }
+
+      // Check if lesson progress record exists
+      const existing = await this.get<LessonProgress>(
         'SELECT * FROM lesson_progress WHERE user_id = ? AND module_id = ? AND lesson_id = ?',
         [progressData.userId, progressData.moduleId, progressData.lessonId]
       )
 
       if (existing) {
-        // Update existing record
+        // Update existing record - ACCUMULATE time instead of overwriting
+        const newTimeSpent = (existing.time_spent || 0) + progressData.timeSpent
         await this.run(
-          'UPDATE lesson_progress SET completed = ?, time_spent = ?, quiz_score = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? AND module_id = ? AND lesson_id = ?',
+          'UPDATE lesson_progress SET completed = ?, time_spent = ?, quiz_score = ?, updated_at = CURRENT_TIMESTAMP, completed_at = ? WHERE user_id = ? AND module_id = ? AND lesson_id = ?',
           [
             progressData.completed,
-            progressData.timeSpent,
-            progressData.quizScore,
+            newTimeSpent,
+            progressData.quizScore !== undefined ? progressData.quizScore : existing.quiz_score,
+            progressData.completed ? new Date().toISOString() : existing.completed_at,
             progressData.userId,
             progressData.moduleId,
             progressData.lessonId
@@ -393,17 +420,21 @@ class DatabaseManager {
       } else {
         // Create new record
         await this.run(
-          'INSERT INTO lesson_progress (user_id, module_id, lesson_id, completed, time_spent, quiz_score) VALUES (?, ?, ?, ?, ?, ?)',
+          'INSERT INTO lesson_progress (user_id, module_id, lesson_id, completed, time_spent, quiz_score, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
           [
             progressData.userId,
             progressData.moduleId,
             progressData.lessonId,
             progressData.completed,
             progressData.timeSpent,
-            progressData.quizScore
+            progressData.quizScore,
+            progressData.completed ? new Date().toISOString() : null
           ]
         )
       }
+
+      // Check if the module is now completed
+      await this.updateModuleCompletionStatus(progressData.userId, progressData.moduleId)
 
       // Return the updated lesson progress record
       const updatedProgress = await this.get<LessonProgress>(
@@ -455,6 +486,64 @@ class DatabaseManager {
       return { success: true, message: `Reset progress for ${result.changes} lessons` }
     } catch (error) {
       return { success: false, error: `Failed to reset progress: ${error}` }
+    }
+  }
+
+  private async updateModuleCompletionStatus(userId: number, moduleId: number): Promise<void> {
+    try {
+      // Get the module to check total lessons and quizzes
+      const module = await this.get<ModuleRow>('SELECT * FROM modules WHERE id = ?', [moduleId])
+      if (!module) return
+
+      const parsedContent = module.content
+        ? JSON.parse(module.content)
+        : { lessons: [], quizzes: [] }
+      const totalLessons = parsedContent.lessons?.length || 0
+      const totalQuizzes = parsedContent.quizzes?.length || 0
+      const totalItems = totalLessons + totalQuizzes
+
+      if (totalItems === 0) return
+
+      // Get completed lessons count (lesson IDs like "lesson-1", "lesson-2", etc.)
+      const completedLessonsResult = await this.query<{ count: number }>(
+        'SELECT COUNT(*) as count FROM lesson_progress WHERE user_id = ? AND module_id = ? AND completed = 1 AND lesson_id LIKE "lesson-%"',
+        [userId, moduleId]
+      )
+
+      // Get completed quizzes count (quiz IDs like "quiz-1", "quiz-2", etc.)
+      const completedQuizzesResult = await this.query<{ count: number }>(
+        'SELECT COUNT(*) as count FROM lesson_progress WHERE user_id = ? AND module_id = ? AND completed = 1 AND lesson_id LIKE "quiz-%" AND quiz_score IS NOT NULL',
+        [userId, moduleId]
+      )
+
+      const completedLessons = completedLessonsResult[0]?.count || 0
+      const completedQuizzes = completedQuizzesResult[0]?.count || 0
+      const totalCompleted = completedLessons + completedQuizzes
+
+      const progressPercentage = Math.round((totalCompleted / totalItems) * 100)
+      const isCompleted = completedLessons >= totalLessons && completedQuizzes >= totalQuizzes
+
+      // Get current module progress
+      const currentProgress = await this.get<UserProgress>(
+        'SELECT * FROM user_progress WHERE user_id = ? AND module_id = ?',
+        [userId, moduleId]
+      )
+
+      if (currentProgress) {
+        // Update existing progress
+        const wasAlreadyCompleted = currentProgress.completed
+        const completionDate =
+          isCompleted && !wasAlreadyCompleted
+            ? new Date().toISOString()
+            : currentProgress.completion_date
+
+        await this.run(
+          'UPDATE user_progress SET progress_percentage = ?, completed = ?, completion_date = ? WHERE user_id = ? AND module_id = ?',
+          [progressPercentage, isCompleted, completionDate, userId, moduleId]
+        )
+      }
+    } catch (error) {
+      console.error('Failed to update module completion status:', error)
     }
   }
 

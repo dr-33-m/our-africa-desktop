@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { useParams, useNavigate } from '@tanstack/react-router'
-import { Clock, BookOpen, Award, ArrowRight, Download } from 'lucide-react'
+import { BookOpen, Award, ArrowRight, Download, Clock } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import { useModules } from '../../hooks/useModules'
 import { useProgress } from '../../hooks/useProgress'
 import Button from '../../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card'
 import Progress from '../../components/ui/Progress'
-import { formatTime } from '../../lib/utils'
+import { formatDuration, formatDateShort } from '../../lib/utils'
 import { useCertificateDownload } from '../../hooks/useCertificateDownload'
 
 const ModuleDetailsPage: React.FC = () => {
@@ -15,7 +15,7 @@ const ModuleDetailsPage: React.FC = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { currentModule, loadModuleById, isLoading, error } = useModules()
-  const { getModuleProgress, loadProgress } = useProgress()
+  const { getModuleProgress, getUserModuleProgress, loadProgress } = useProgress()
   const { downloadCertificate, isGenerating: isGeneratingCertificate } = useCertificateDownload()
 
   useEffect(() => {
@@ -71,6 +71,9 @@ const ModuleDetailsPage: React.FC = () => {
         currentModule.content.quizzes?.length || 0
       )
     : null
+
+  // Get raw user progress data for timestamps
+  const userProgress = user ? getUserModuleProgress(user.id, currentModule.id) : null
 
   const percentComplete = progress?.percentComplete || 0
 
@@ -138,11 +141,17 @@ const ModuleDetailsPage: React.FC = () => {
           <div className="bg-surface/50 dark:bg-surface-dark/50 rounded-lg p-4">
             <div className="flex items-center mb-2">
               <Clock size={20} className="mr-2 text-secondary dark:text-secondary-dark" />
-              <h3 className="font-semibold">Time Spent</h3>
+              <h3 className="font-semibold">Progress</h3>
             </div>
-            <p className="text-2xl font-bold">{formatTime(progress?.totalTimeSpent || 0)}</p>
+            <p className="text-2xl font-bold">
+              {userProgress?.completion_date
+                ? formatDuration(userProgress.started_at, userProgress.completion_date)
+                : userProgress?.started_at
+                  ? `Started ${formatDateShort(userProgress.started_at)}`
+                  : 'Not started'}
+            </p>
             <p className="text-sm text-text-secondary dark:text-text-secondary-dark">
-              learning time
+              {userProgress?.completion_date ? 'completion time' : 'module status'}
             </p>
           </div>
         </div>

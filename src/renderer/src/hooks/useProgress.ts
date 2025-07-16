@@ -48,6 +48,7 @@ interface ProgressState {
   ) => boolean
   getCertificate: (userId: number, moduleId: number) => Certificate | null
   getCertificateCount: (userId: number) => number
+  getUserModuleProgress: (userId: number, moduleId: number) => UserProgress | null
   generateCertificate: (userId: number, moduleId: number) => Promise<void>
 }
 
@@ -112,12 +113,14 @@ export const useProgress = create<ProgressState>()(
           (lp) => lp && lp.user_id === userId && lp.module_id === moduleId
         )
 
+        // Count completed lessons (lesson IDs like "lesson-1", "lesson-2", etc.)
         const lessonsCompleted = lessonProgressData.filter(
-          (lp) => lp && lp.completed && lp.quiz_score === null
+          (lp) => lp && lp.completed && lp.lesson_id.startsWith('lesson-')
         ).length
 
+        // Count completed quizzes (quiz IDs like "quiz-1", "quiz-2", etc.)
         const quizzesCompleted = lessonProgressData.filter(
-          (lp) => lp && lp.completed && lp.quiz_score !== null
+          (lp) => lp && lp.completed && lp.lesson_id.startsWith('quiz-') && lp.quiz_score !== null
         ).length
 
         const totalTimeSpent = lessonProgressData.reduce(
@@ -125,6 +128,7 @@ export const useProgress = create<ProgressState>()(
           0
         )
 
+        // Use the database-calculated percentage if available, otherwise calculate locally
         const percentComplete =
           moduleProgress?.progress_percentage ||
           calculateProgress(lessonsCompleted + quizzesCompleted, totalLessons + totalQuizzes)
@@ -257,6 +261,12 @@ export const useProgress = create<ProgressState>()(
 
       getCertificateCount: (userId: number) => {
         return get().certificates.filter((cert) => cert.user_id === userId).length
+      },
+
+      getUserModuleProgress: (userId: number, moduleId: number) => {
+        return (
+          get().progress.find((p) => p && p.user_id === userId && p.module_id === moduleId) || null
+        )
       },
 
       generateCertificate: async (userId: number, moduleId: number) => {

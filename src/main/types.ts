@@ -90,6 +90,7 @@ export interface UserProgress {
   module_id: number
   progress_percentage: number
   completed: boolean
+  started_at: string | null
   completion_date: string | null
   total_time_spent: number
   last_accessed: string

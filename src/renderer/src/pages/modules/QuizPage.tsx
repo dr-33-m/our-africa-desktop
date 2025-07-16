@@ -8,6 +8,7 @@ import Button from '../../components/ui/Button'
 import Progress from '../../components/ui/Progress'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../../components/ui/Card'
 import { useCertificateDownload } from '../../hooks/useCertificateDownload'
+import { apiClient } from '../../lib/apiClient'
 
 const QuizPage: React.FC = () => {
   const { moduleId, quizId } = useParams({
@@ -176,16 +177,10 @@ const QuizPage: React.FC = () => {
     const handleStartOver = async (): Promise<void> => {
       if (!user || !currentModule) return
       try {
-        await fetch('/api/progress/reset', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            userId: user.id,
-            moduleId: currentModule.id
-          })
-        })
+        const result = await apiClient.resetModuleProgress(user.id, currentModule.id)
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to reset progress')
+        }
         // Navigate to the first lesson
         const firstLesson = currentModule.content.lessons[0]
         if (firstLesson) {
@@ -195,7 +190,8 @@ const QuizPage: React.FC = () => {
         } else {
           navigate({ to: `/modules/${currentModule.id}` })
         }
-      } catch {
+      } catch (error) {
+        console.error('Failed to reset progress:', error)
         alert('Failed to reset progress. Please try again.')
       }
     }
