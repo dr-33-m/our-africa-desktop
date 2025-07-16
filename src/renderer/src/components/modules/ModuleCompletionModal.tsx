@@ -37,7 +37,7 @@ const ModuleCompletionModal: React.FC<ModuleCompletionModalProps> = ({
       await saveCertificateToStore(user.id, module.id)
 
       // Generate the PDF certificate
-      const certificateDataUrl = generateCertificate(user, module)
+      const certificateDataUrl = await generateCertificate(user, module)
 
       // Download the certificate
       const fileName = `${module.title.replace(/[^a-zA-Z0-9]/g, '_')}_Certificate.pdf`

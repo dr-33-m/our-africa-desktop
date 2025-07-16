@@ -1,13 +1,14 @@
-import React from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { BookOpen, User, LogOut } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
-import Button from "../ui/Button";
+import React from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import { User, LogOut } from 'lucide-react'
+import { useAuth } from '../../hooks/useAuth'
+import Button from '../ui/Button'
+import logoImage from '../../assets/logo.png'
 // import ThemeToggle from "../ui/ThemeToggle";
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
 
   return (
     <header className="bg-surface dark:bg-surface-dark shadow-sm border-b border-border dark:border-border-dark">
@@ -16,9 +17,9 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <div
               className="flex-shrink-0 flex items-center cursor-pointer"
-              onClick={() => navigate({ to: "/" })}
+              onClick={() => navigate({ to: '/' })}
             >
-              <BookOpen className="h-8 w-8 text-primary dark:text-primary-dark" />
+              <img src={logoImage} alt="Our Africa Logo" className="h-8 w-8 object-contain" />
               <span className="ml-2 text-xl font-bold text-text dark:text-text-dark">
                 Our Africa
               </span>
@@ -29,8 +30,8 @@ const Header: React.FC = () => {
                 <a
                   href="#"
                   onClick={(e) => {
-                    e.preventDefault();
-                    navigate({ to: "/" });
+                    e.preventDefault()
+                    navigate({ to: '/' })
                   }}
                   className="inline-flex items-center px-1 pt-1 text-sm font-medium text-text dark:text-text-dark border-b-2 border-transparent hover:border-primary-dark"
                 >
@@ -39,8 +40,8 @@ const Header: React.FC = () => {
                 <a
                   href="#"
                   onClick={(e) => {
-                    e.preventDefault();
-                    navigate({ to: "/modules/browse" });
+                    e.preventDefault()
+                    navigate({ to: '/modules/browse' })
                   }}
                   className="inline-flex items-center px-1 pt-1 text-sm font-medium text-text-secondary dark:text-text-secondary-dark border-b-2 border-transparent hover:border-primary-dark"
                 >
@@ -68,8 +69,8 @@ const Header: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    logout();
-                    navigate({ to: "/auth/login" });
+                    logout()
+                    navigate({ to: '/auth/login' })
                   }}
                   leftIcon={<LogOut size={16} />}
                 >
@@ -78,17 +79,10 @@ const Header: React.FC = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => navigate({ to: "/auth/login" })}
-                >
+                <Button variant="ghost" size="sm" onClick={() => navigate({ to: '/auth/login' })}>
                   Login
                 </Button>
-                <Button
-                  size="sm"
-                  onClick={() => navigate({ to: "/auth/register" })}
-                >
+                <Button size="sm" onClick={() => navigate({ to: '/auth/register' })}>
                   Register
                 </Button>
               </div>
@@ -97,7 +91,7 @@ const Header: React.FC = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

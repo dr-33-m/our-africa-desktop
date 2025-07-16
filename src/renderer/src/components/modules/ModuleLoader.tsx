@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Download, Upload, AlertCircle, CheckCircle, Clock, BookOpen } from 'lucide-react'
+import { Upload, AlertCircle, CheckCircle, Clock, BookOpen, Lock } from 'lucide-react'
 import Modal from '../ui/Modal'
 import Button from '../ui/Button'
 import Input from '../ui/Input'
@@ -25,7 +25,7 @@ const ModuleLoader: React.FC<ModuleLoaderProps> = ({
   onModuleLoaded,
   existingModules
 }) => {
-  const [activeTab, setActiveTab] = useState<LoadMethod>('url')
+  const [activeTab, setActiveTab] = useState<LoadMethod>('file')
   const [url, setUrl] = useState('')
   const [loadingState, setLoadingState] = useState<LoadingState>('idle')
   const [loadResult, setLoadResult] = useState<ModuleLoadResult | null>(null)
@@ -212,14 +212,11 @@ const ModuleLoader: React.FC<ModuleLoaderProps> = ({
         {/* Tab Navigation */}
         <div className="flex space-x-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1 mb-6">
           <button
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === 'url'
-                ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
-            onClick={() => setActiveTab('url')}
+            className="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors cursor-not-allowed opacity-50 text-gray-500 dark:text-gray-500"
+            disabled
+            title="This feature is not available"
           >
-            <Download size={16} className="inline mr-2" />
+            <Lock size={16} className="inline mr-2" />
             Download from URL
           </button>
           <button

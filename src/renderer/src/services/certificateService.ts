@@ -1,24 +1,37 @@
 import { jsPDF } from 'jspdf'
 import { Module, User } from '../types'
-// Function to draw BookOpen icon using jsPDF commands
-function drawBookOpenIcon(doc: jsPDF, x: number, y: number, size: number) {
-  doc.setFillColor(79, 42, 106) // Primary color #4F2A6A
-  // Book cover (simplified rectangle)
-  doc.rect(x, y, size * 1.5, size * 1.2, 'F')
-  // Book pages (simplified lines)
-  doc.setDrawColor(79, 42, 106)
-  doc.setLineWidth(0.5)
-  for (let i = 0; i < 5; i++) {
-    doc.line(
-      x + size * 0.2,
-      y + size * 0.2 + i * size * 0.2,
-      x + size * 1.3,
-      y + size * 0.2 + i * size * 0.2
-    )
-  }
+import logoImage from '../assets/logo.png'
+
+// Function to load image as base64
+const loadImageAsBase64 = (src: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (!ctx) {
+        reject(new Error('Could not get canvas context'))
+        return
+      }
+
+      canvas.width = img.width
+      canvas.height = img.height
+      ctx.drawImage(img, 0, 0)
+
+      try {
+        const dataURL = canvas.toDataURL('image/png')
+        resolve(dataURL)
+      } catch (error) {
+        reject(error)
+      }
+    }
+    img.onerror = () => reject(new Error('Failed to load image'))
+    img.src = src
+  })
 }
 
-export const generateCertificate = (user: User, module: Module): string => {
+export const generateCertificate = async (user: User, module: Module): Promise<string> => {
   const doc = new jsPDF({
     orientation: 'landscape',
     unit: 'mm',
@@ -91,14 +104,28 @@ export const generateCertificate = (user: User, module: Module): string => {
     align: 'center'
   })
 
-  // Add BookOpen icon
-  drawBookOpenIcon(doc, 297 / 2 - 12, 160, 10)
-
-  // Add platform name
-  doc.setFontSize(12)
-  doc.setTextColor(79, 42, 106) // Primary color #4F2A6A
-  doc.setFont('helvetica', 'bold')
-  doc.text('Our Africa', 297 / 2, 180, { align: 'center' })
+  // Add logo or fallback text
+  try {
+    const logoBase64 = await loadImageAsBase64(logoImage)
+    const logoSize = 20 // Logo size in mm
+    doc.addImage(
+      logoBase64,
+      'PNG',
+      297 / 2 - logoSize / 2, // Center horizontally
+      155, // Y position
+      logoSize,
+      logoSize,
+      undefined,
+      'FAST'
+    )
+  } catch (error) {
+    console.warn('Failed to load logo for certificate:', error)
+    // Fallback: Add "Our Africa" text instead of logo
+    doc.setFontSize(12)
+    doc.setTextColor(79, 42, 106) // Primary color #4F2A6A
+    doc.setFont('helvetica', 'bold')
+    doc.text('Our Africa', 297 / 2, 170, { align: 'center' })
+  }
 
   // Save the PDF
   return doc.output('datauristring')
