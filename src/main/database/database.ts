@@ -1,9 +1,10 @@
 import { Database } from 'sqlite3'
 import { join } from 'path'
-import { mkdirSync, existsSync, readFileSync } from 'fs'
+import { mkdirSync, existsSync } from 'fs'
 import { app } from 'electron'
 import * as bcrypt from 'bcrypt'
 import type { User, Module, UserProgress, Certificate, ApiResponse, LessonProgress } from '../types'
+import { DATABASE_SCHEMA } from './schema'
 
 // Database row interfaces
 interface ModuleRow {
@@ -100,11 +101,9 @@ class DatabaseManager {
       // Initialize database connection
       this.db = new Database(this.dbPath)
 
-      // Read schema from external file
-      // Use app.getAppPath() to get the correct path in both dev and production
-      const appPath = app.getAppPath()
-      const schemaPath = join(appPath, 'src/main/database/schema.sql')
-      const schema = readFileSync(schemaPath, 'utf8')
+      // Use embedded schema instead of reading from file
+      const schema = DATABASE_SCHEMA
+      console.log('Using embedded database schema')
 
       // Drop existing tables to ensure clean schema
       const dropStatements = [
@@ -126,9 +125,6 @@ class DatabaseManager {
           await this.run(statement)
         }
       }
-
-      // Load sample module from JSON file
-      await this.loadSampleModule()
 
       console.log('Database initialized successfully')
     } catch (error) {
@@ -626,85 +622,6 @@ class DatabaseManager {
     } catch (error) {
       console.error('Failed to verify certificate:', error)
       return null
-    }
-  }
-
-  private async loadSampleModule(): Promise<void> {
-    try {
-      console.log('Attempting to load sample module...')
-
-      // Try multiple possible paths for the sample module
-      const appPath = app.getAppPath()
-      const possiblePaths = [
-        join(appPath, 'src/renderer/src/data/sample-module.json'),
-        join(appPath, 'dist/renderer/src/data/sample-module.json'),
-        join(__dirname, '../../renderer/src/data/sample-module.json'),
-        join(__dirname, '../../../src/renderer/src/data/sample-module.json'),
-        join(process.cwd(), 'src/renderer/src/data/sample-module.json')
-      ]
-
-      let sampleModuleData: string | null = null
-
-      // Try each path until we find one that works
-      for (const path of possiblePaths) {
-        console.log(`Trying path: ${path}`)
-        if (existsSync(path)) {
-          console.log(`Found sample module at: ${path}`)
-          try {
-            sampleModuleData = readFileSync(path, 'utf8')
-            break
-          } catch (readError) {
-            console.warn(`Could not read file at ${path}:`, readError)
-            continue
-          }
-        }
-      }
-
-      if (!sampleModuleData) {
-        console.warn('Could not find sample module file at any expected location')
-        console.log('Expected locations:', possiblePaths)
-        return
-      }
-
-      console.log('Successfully read sample module file')
-      const sampleModule = JSON.parse(sampleModuleData)
-
-      // Validate the module structure
-      if (!sampleModule.title || !sampleModule.description || !sampleModule.content) {
-        console.error('Invalid sample module structure - missing required fields')
-        return
-      }
-
-      if (!sampleModule.content.lessons || !Array.isArray(sampleModule.content.lessons)) {
-        console.error('Invalid sample module structure - missing or invalid lessons array')
-        return
-      }
-
-      console.log(
-        `Sample module contains ${sampleModule.content.lessons.length} lessons and ${sampleModule.content.quizzes?.length || 0} quizzes`
-      )
-
-      // Create the sample module in the database
-      const result = await this.createModule({
-        title: sampleModule.title,
-        description: sampleModule.description,
-        content: sampleModule.content,
-        version: sampleModule.version || '1.0',
-        author: sampleModule.author || 'OurAfrica University',
-        difficulty_level: sampleModule.difficulty_level || 'beginner',
-        tags: sampleModule.tags || ['computer-science', 'programming', 'algorithms']
-      })
-
-      if (result.success) {
-        console.log('Sample module loaded successfully with ID:', result.data?.id)
-      } else {
-        console.error('Failed to create sample module in database:', result.error)
-      }
-    } catch (moduleError) {
-      console.error('Failed to load sample module:', moduleError)
-      if (moduleError instanceof SyntaxError) {
-        console.error('Sample module JSON is malformed')
-      }
     }
   }
 

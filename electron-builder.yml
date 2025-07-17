@@ -3,6 +3,8 @@ productName: our-africa
 directories:
   buildResources: build
 files:
+  - 'out/**/*'
+  - 'src/main/database/schema.sql'
   - '!**/.vscode/*'
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
@@ -12,6 +14,7 @@ files:
 asarUnpack:
   - resources/**
   - node_modules/sqlite3/**
+  - src/main/database/schema.sql
 win:
   executableName: our-africa
 nsis:

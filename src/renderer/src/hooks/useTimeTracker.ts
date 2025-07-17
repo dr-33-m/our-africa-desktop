@@ -66,14 +66,13 @@ export const useTimeTracker = (
           }
         }
       }, autoSaveInterval)
+    }
 
-      return () => {
-        if (autoSaveIntervalRef.current) {
-          clearInterval(autoSaveIntervalRef.current)
-        }
+    return () => {
+      if (autoSaveIntervalRef.current) {
+        clearInterval(autoSaveIntervalRef.current)
       }
     }
-    return () => {} // Empty cleanup for cases where we don't set up interval
   }, [onSave, autoSaveInterval, sessionTime])
 
   // Handle window focus/blur for activity detection
